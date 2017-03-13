@@ -9,25 +9,27 @@ angular.module('Widget', ['chart.js'])
 
   let options = {};
 
-  let results = {};
+  var result = {};
 
   const inputData = () => {
     return $http.post(`/api/loaninfo`, options)
     .then((response) => {
       let data = {
         scholarship: parseInt(response.data.scholarship),
-        interest: parseInt(response.data.interest),
+        interest: parseFloat(response.data.interest),
         loanPeriod: parseInt(response.data.loanPeriod)
       }
+
+      console.log(data);
       return data;
     })
     .then((data) => {
-      results = {
+      var results = {
         scholarship: data.scholarship,
-        monthlyPayment: (data.scholarship * data.interest) / data.loanPeriod,
+        monthlyPayment: parseFloat(((data.scholarship * data.interest) / data.loanPeriod).toFixed(2)),
         months: data.loanPeriod,
         labels: [],
-        data: [data.scholarship],
+        payments: [data.scholarship],
         series: ['Scholarship']
       }
 
@@ -35,21 +37,22 @@ angular.module('Widget', ['chart.js'])
 
       for(var i = 0; i < results.months; i++) {
         results.labels.push(i.toString());
-        scholarship -= results.monthlyPayment
+        scholarship -= results.monthlyPayment;
         console.log(scholarship);
         if(scholarship >= 0) {
-            results.data.push(scholarship)
+            results.payments.push(scholarship)
         }
       }
       console.log(results);
-    });
+      return results
+    })
   }
 
   return {
     rateSearch: rateSearch,
     inputData: inputData,
     options: options,
-    results: results
+    result: result
   }
 
 })
@@ -76,83 +79,87 @@ angular.module('Widget', ['chart.js'])
 
   $scope.input = function () {
     Services.inputData($scope.query)
-  //   .then((response) => {
-  //     let data = {
-  //       scholarship: parseInt(response.data.scholarship),
-  //       interest: parseInt(response.data.interest),
-  //       loanPeriod: parseInt(response.data.loanPeriod)
-  //     }
-  //     return data;
-  //   })
-  //   .then((data) => {
-  //     let math = {
-  //       scholarship: data.scholarship,
-  //       monthlyPayment: (data.scholarship * data.interest) / data.loanPeriod,
-  //       months: data.loanPeriod
-  //     }
-  //     $scope.labels = [];
-  //     $scope.series = ['Scholarship']
-  //     $scope.data = [];
-  //     // console.log(math.monthlyPayment)
-  //     let scholarship = math.scholarship;
-  //
-  //     for(var i = 0; i < math.months; i++) {
-  //       $scope.labels.push(i.toString());
-  //       scholarship -= math.monthlyPayment
-  //       if(scholarship >= 0) {
-  //           $scope.data.push(scholarship)
-  //       }
-  //     }
-  //     $scope.onClick = function (points, evt) {
-  //       console.log(points, evt);
-  //     };
-  //     $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-  //     $scope.options = {
-  //       scales: {
-  //         yAxes: [
-  //           {
-  //             id: 'y-axis-1',
-  //             type: 'linear',
-  //             display: true,
-  //             position: 'left'
-  //           },
-  //           {
-  //             id: 'y-axis-2',
-  //             type: 'linear',
-  //             display: true,
-  //             position: 'right'
-  //           }
-  //         ]
-  //       }
-  //     };
-  //   })
-  }
-
-
-})
-
-.controller("LineCtrl", function ($scope, Services) {
-
-
-  $scope.initData = function() {
-    $scope.labels = Services.results.labels;
-    $scope.series = Services.results.series;
-    $scope.data = [Services.results.data];
-    $scope.onClick = function (points, evt) {
-      console.log(points, evt);
-    };
-    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
-    $scope.options = {
-      scales: {
-        yAxes: [
-          {
-            id: 'y-axis-1',
-            type: 'linear',
-            display: true,
-            position: 'left'
-          }
-        ]
+    .then((response) => {
+      console.log(response);
+      return response
+    })
+    .then((data) => {
+      let math = {
+        scholarship: data.scholarship,
+        monthlyPayment: (data.scholarship * data.interest) / data.loanPeriod,
+        months: data.loanPeriod
       }
-    };
+      $scope.labels = [];
+      $scope.series = ['Scholarship']
+      $scope.data = [];
+      // console.log(math.monthlyPayment)
+      let scholarship = math.scholarship;
+
+      for(var i = 0; i < math.months; i++) {
+        $scope.labels.push(i.toString());
+        scholarship -= math.monthlyPayment
+        if(scholarship >= 0) {
+            $scope.data.push(scholarship)
+        }
+      }
+      $scope.onClick = function (points, evt) {
+        console.log(points, evt);
+      };
+      $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+      $scope.options = {
+        scales: {
+          yAxes: [
+            {
+              id: 'y-axis-1',
+              type: 'linear',
+              display: true,
+              position: 'left'
+            },
+            {
+              id: 'y-axis-2',
+              type: 'linear',
+              display: true,
+              position: 'right'
+            }
+          ]
+        }
+      };
+    })
   }
+
+
 })
+//
+// .controller("LineCtrl", function ($scope, Services) {
+//
+//$scope.initData = () => {
+//   console.log(Services.result)
+//   $scope.labels = Services.result.labels;
+//   $scope.series = Services.result.series;
+//   $scope.data = [Services.result.data];
+//   $scope.onClick = function (points, evt) {
+//     console.log(points, evt);
+//   };
+//   $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+//   $scope.options = {
+//     responsive: true,
+//     scales: {
+//       yAxes: [
+//         {
+//           id: 'y-axis-1',
+//           type: 'linear',
+//           display: true,
+//           position: 'left'
+//         },
+//         {
+//           id: 'y-axis-2',
+//           type: 'linear',
+//           display: true,
+//           position: 'right'
+//         }
+//       ]
+//     }
+//   };
+// }
+//
+// })
