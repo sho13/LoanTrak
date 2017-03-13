@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/sho13/ngv-cc#readme",
   "dependencies": {
+    "angular-chart.js": "1.1.1",
     "body-parser": "1.17.1",
+    "chart.js": "2.0.2",
     "commitizen": "2.9.6",
     "express": "4.15.2",
     "nodemon": "1.11.0",

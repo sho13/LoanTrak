@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <head>
-  <title>Widget 1</title>
+  <title>Loan Tracker</title>
 </head>
 <body ng-app="Widget">
   <div>
-    <h1>Widget 1</h1>
+    <h1>Loan Tracker</h1>
+    <div ng-controller="CurrentRate">
+
+      <input type="submit" value="Click Current Interest Rates" ng-click="currentRate()" />
+      <p>Direct Subsidized Undergrad: {{rates.directSubsidizedUndergrad}}</p>
+      <p>Direct Unsubsidized Undergrad: {{rates.directUnsubsidizedUndergrad}}</p>
+      <p>Direct Unsubsidized Grad: {{rates.directUnsubsidizedGrad}}</p>
+      <p>Direct Plus: {{rates.directPlus}}</p>
+    </div>
+    <div ng-controller="LineCtrl">
+      <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
+    </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-  <script src="client/widget.js"></script>
+  <script src="./src/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.2/Chart.min.js"></script>
+  <script src="http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script></body>
 </body>
 </html>
