@@ -17,9 +17,7 @@ angular.module('Widget', ['chart.js'])
         interest: parseFloat(response.data.interest),
         loanPeriod: parseInt(response.data.loanPeriod)
       }
-      return data;
-    })
-    .then((data) => {
+
       var results = {
         scholarship: data.scholarship,
         monthlyPayment: parseFloat(((data.scholarship * data.interest) / data.loanPeriod).toFixed(2)),
@@ -40,7 +38,7 @@ angular.module('Widget', ['chart.js'])
       }
 
       return results
-    })
+    });
   }
 
   return {
@@ -75,7 +73,6 @@ angular.module('Widget', ['chart.js'])
   $scope.input = function () {
     Services.inputData($scope.query)
     .then((response) => {
-      console.log(response);
       return response
     })
     .then((data) => {
@@ -83,16 +80,8 @@ angular.module('Widget', ['chart.js'])
       $scope.months = Services.options.loan;
       $scope.labels = data.labels;
       $scope.series = data.series;
-      //for some reason i couldn't have the value be at the hundredth place, after the first two it kept going.
-      // let payment = data.payments.map(value => {
-      //   return parseFloat(value.toFixed(2));
-      // })
-      // console.log(payment);
       $scope.data = [data.payments];
 
-      // $scope.onClick = function (points, evt) {
-      //
-      // };
       $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
       $scope.options = {
         scales: {
