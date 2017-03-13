@@ -8,6 +8,15 @@ app.use(express.static(path.join(__dirname, '/../src/')));
 app.use(express.static(path.join(__dirname, '/../node_modules')));
 app.use(bodyParser.json());
 
+app.get('/api/currentrates', (req, res) => {
+  const body = {
+    directSubsidizedUndergrad: `3.76%`,
+    directUnsubsidizedUndergrade: `3.76%`,
+    directUnsubsidizedGrad: `5.31%`,
+    directPlus: `6.31%`
+  }
+  res.send(body);
+})
 
 app.listen(port, (err) => {
   if(err) {
