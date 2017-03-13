@@ -11,6 +11,7 @@
       Interest Rate: <input text="text" ng-model="query.interest" placeholder="ex: 0.05" />
       Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
       <button ng-click="input()">Track Your Loan! </button>
+      <p>You will pay: {{monthly}} over the course of: {{months}} months</p>
 
       <div ng-controller="CurrentRate">
         <input type="submit" value="Click For Current Interest Rates" ng-click="currentRate()" />

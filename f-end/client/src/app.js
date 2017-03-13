@@ -9,8 +9,6 @@ angular.module('Widget', ['chart.js'])
 
   let options = {};
 
-  var result = {};
-
   const inputData = () => {
     return $http.post(`/api/loaninfo`, options)
     .then((response) => {
@@ -36,11 +34,11 @@ angular.module('Widget', ['chart.js'])
       for(var i = 0; i < results.months; i++) {
         results.labels.push(i.toString());
         scholarship -= results.monthlyPayment;
-        scholarship.toFixed(2)
         if(scholarship >= 0) {
-            results.payments.push(scholarship)
+            results.payments.push(parseFloat(scholarship.toFixed(2)))
         }
       }
+
       return results
     })
   }
@@ -49,7 +47,6 @@ angular.module('Widget', ['chart.js'])
     rateSearch: rateSearch,
     inputData: inputData,
     options: options,
-    result: result
   }
 
 })
@@ -69,6 +66,7 @@ angular.module('Widget', ['chart.js'])
   }
 })
 
+//chart renderer
 .controller("InputController", function($scope, Services) {
 
   $scope.data = [];
@@ -81,14 +79,21 @@ angular.module('Widget', ['chart.js'])
       return response
     })
     .then((data) => {
+      $scope.monthly = data.monthlyPayment;
+      $scope.months = Services.options.loan;
       $scope.labels = data.labels;
       $scope.series = data.series;
+      //for some reason i couldn't have the value be at the hundredth place, after the first two it kept going.
+      // let payment = data.payments.map(value => {
+      //   return parseFloat(value.toFixed(2));
+      // })
+      // console.log(payment);
       $scope.data = [data.payments];
 
-      $scope.onClick = function (points, evt) {
-
-      };
-      $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+      // $scope.onClick = function (points, evt) {
+      //
+      // };
+      $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
       $scope.options = {
         scales: {
           yAxes: [
@@ -97,12 +102,6 @@ angular.module('Widget', ['chart.js'])
               type: 'linear',
               display: true,
               position: 'left'
-            },
-            {
-              id: 'y-axis-2',
-              type: 'linear',
-              display: true,
-              position: 'right'
             }
           ]
         }
@@ -110,39 +109,4 @@ angular.module('Widget', ['chart.js'])
     })
   }
 
-
 })
-//
-// .controller("LineCtrl", function ($scope, Services) {
-//
-//$scope.initData = () => {
-//   console.log(Services.result)
-//   $scope.labels = Services.result.labels;
-//   $scope.series = Services.result.series;
-//   $scope.data = [Services.result.data];
-//   $scope.onClick = function (points, evt) {
-//     console.log(points, evt);
-//   };
-//   $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-//   $scope.options = {
-//     responsive: true,
-//     scales: {
-//       yAxes: [
-//         {
-//           id: 'y-axis-1',
-//           type: 'linear',
-//           display: true,
-//           position: 'left'
-//         },
-//         {
-//           id: 'y-axis-2',
-//           type: 'linear',
-//           display: true,
-//           position: 'right'
-//         }
-//       ]
-//     }
-//   };
-// }
-//
-// })
