@@ -19,8 +19,6 @@ angular.module('Widget', ['chart.js'])
         interest: parseFloat(response.data.interest),
         loanPeriod: parseInt(response.data.loanPeriod)
       }
-
-      console.log(data);
       return data;
     })
     .then((data) => {
@@ -38,12 +36,11 @@ angular.module('Widget', ['chart.js'])
       for(var i = 0; i < results.months; i++) {
         results.labels.push(i.toString());
         scholarship -= results.monthlyPayment;
-        console.log(scholarship);
+        scholarship.toFixed(2)
         if(scholarship >= 0) {
             results.payments.push(scholarship)
         }
       }
-      console.log(results);
       return results
     })
   }
@@ -84,26 +81,12 @@ angular.module('Widget', ['chart.js'])
       return response
     })
     .then((data) => {
-      let math = {
-        scholarship: data.scholarship,
-        monthlyPayment: (data.scholarship * data.interest) / data.loanPeriod,
-        months: data.loanPeriod
-      }
-      $scope.labels = [];
-      $scope.series = ['Scholarship']
-      $scope.data = [];
-      // console.log(math.monthlyPayment)
-      let scholarship = math.scholarship;
+      $scope.labels = data.labels;
+      $scope.series = data.series;
+      $scope.data = [data.payments];
 
-      for(var i = 0; i < math.months; i++) {
-        $scope.labels.push(i.toString());
-        scholarship -= math.monthlyPayment
-        if(scholarship >= 0) {
-            $scope.data.push(scholarship)
-        }
-      }
       $scope.onClick = function (points, evt) {
-        console.log(points, evt);
+
       };
       $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
       $scope.options = {
