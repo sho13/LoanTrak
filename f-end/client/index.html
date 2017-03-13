@@ -5,8 +5,14 @@
 <body ng-app="Widget">
   <div>
     <h1>Loan Tracker</h1>
+    <div ng-controller="InputController">
+      <input text="text" ng-model="query.scholarship" placeholder="Scholarship" />
+      <input text="text" ng-model="query.interest" placeholder="Interest Rate" />
+      <input text="text" ng-model="query.loanPeriod" placeholder="Length of Loan" />
+      <button ng-click="input()">Track Your Loan! </button>
+      <!-- <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas> -->
+    </div>
     <div ng-controller="CurrentRate">
-
       <input type="submit" value="Click Current Interest Rates" ng-click="currentRate()" />
       <p>Direct Subsidized Undergrad: {{rates.directSubsidizedUndergrad}}</p>
       <p>Direct Unsubsidized Undergrad: {{rates.directUnsubsidizedUndergrad}}</p>
@@ -14,6 +20,7 @@
       <p>Direct Plus: {{rates.directPlus}}</p>
     </div>
     <div ng-controller="LineCtrl">
+      <button type="button" ng-click="initData()">init data</button>
       <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
     </div>
   </div>

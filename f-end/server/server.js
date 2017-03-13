@@ -16,8 +16,12 @@ app.get('/api/currentrates', (req, res) => {
     directUnsubsidizedGrad: `5.31%`,
     directPlus: `6.31%`
   }
-  res.json(body);
+  res.send(body);
 });
+
+app.post('/api/loaninfo', (req, res) => {
+  res.send(req.body);
+})
 
 
 //set port

@@ -1,27 +1,64 @@
 angular.module('Widget', ['chart.js'])
 
-.factory('CurrentRates',($http) => {
+.factory('Services',($http) => {
 
   const rateSearch = () => {
-    return $http({
-      method: `GET`,
-      url: `/api/currentrates`,
-      headers: `text/html`
-    })
+    return $http.get(`/api/currentrates`)
     .then(response => response);
   }
 
+  let options = {};
+
+  let results = {};
+
+  const inputData = () => {
+    return $http.post(`/api/loaninfo`, options)
+    .then((response) => {
+      let data = {
+        scholarship: parseInt(response.data.scholarship),
+        interest: parseInt(response.data.interest),
+        loanPeriod: parseInt(response.data.loanPeriod)
+      }
+      return data;
+    })
+    .then((data) => {
+      results = {
+        scholarship: data.scholarship,
+        monthlyPayment: (data.scholarship * data.interest) / data.loanPeriod,
+        months: data.loanPeriod,
+        labels: [],
+        data: [data.scholarship],
+        series: ['Scholarship']
+      }
+
+      let scholarship = results.scholarship;
+
+      for(var i = 0; i < results.months; i++) {
+        results.labels.push(i.toString());
+        scholarship -= results.monthlyPayment
+        console.log(scholarship);
+        if(scholarship >= 0) {
+            results.data.push(scholarship)
+        }
+      }
+      console.log(results);
+    });
+  }
+
   return {
-    rateSearch: rateSearch
+    rateSearch: rateSearch,
+    inputData: inputData,
+    options: options,
+    results: results
   }
 
 })
 
 //current loan rates
-.controller("CurrentRate", function($scope, CurrentRates) {
+.controller("CurrentRate", function($scope, Services) {
   $scope.rates = {};
   $scope.currentRate = () => {
-    CurrentRates.rateSearch()
+    Services.rateSearch()
     .then((response) => {
       let data = response.data;
       $scope.rates.directSubsidizedUndergrad = data.directSubsidizedUndergrad;
@@ -32,38 +69,90 @@ angular.module('Widget', ['chart.js'])
   }
 })
 
-.controller("InputController", function($scope) {
+.controller("InputController", function($scope, Services) {
+
+  $scope.data = [];
+  $scope.query = Services.options;
+
+  $scope.input = function () {
+    Services.inputData($scope.query)
+  //   .then((response) => {
+  //     let data = {
+  //       scholarship: parseInt(response.data.scholarship),
+  //       interest: parseInt(response.data.interest),
+  //       loanPeriod: parseInt(response.data.loanPeriod)
+  //     }
+  //     return data;
+  //   })
+  //   .then((data) => {
+  //     let math = {
+  //       scholarship: data.scholarship,
+  //       monthlyPayment: (data.scholarship * data.interest) / data.loanPeriod,
+  //       months: data.loanPeriod
+  //     }
+  //     $scope.labels = [];
+  //     $scope.series = ['Scholarship']
+  //     $scope.data = [];
+  //     // console.log(math.monthlyPayment)
+  //     let scholarship = math.scholarship;
+  //
+  //     for(var i = 0; i < math.months; i++) {
+  //       $scope.labels.push(i.toString());
+  //       scholarship -= math.monthlyPayment
+  //       if(scholarship >= 0) {
+  //           $scope.data.push(scholarship)
+  //       }
+  //     }
+  //     $scope.onClick = function (points, evt) {
+  //       console.log(points, evt);
+  //     };
+  //     $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+  //     $scope.options = {
+  //       scales: {
+  //         yAxes: [
+  //           {
+  //             id: 'y-axis-1',
+  //             type: 'linear',
+  //             display: true,
+  //             position: 'left'
+  //           },
+  //           {
+  //             id: 'y-axis-2',
+  //             type: 'linear',
+  //             display: true,
+  //             position: 'right'
+  //           }
+  //         ]
+  //       }
+  //     };
+  //   })
+  }
+
 
 })
 
-.controller("LineCtrl", function ($scope) {
+.controller("LineCtrl", function ($scope, Services) {
 
-  $scope.labels = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  $scope.series = ['Scholarship A', 'Series B'];
-  $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
-  $scope.onClick = function (points, evt) {
-    console.log(points, evt);
-  };
-  $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-  $scope.options = {
-    scales: {
-      yAxes: [
-        {
-          id: 'y-axis-1',
-          type: 'linear',
-          display: true,
-          position: 'left'
-        },
-        {
-          id: 'y-axis-2',
-          type: 'linear',
-          display: true,
-          position: 'right'
-        }
-      ]
-    }
-  };
+
+  $scope.initData = function() {
+    $scope.labels = Services.results.labels;
+    $scope.series = Services.results.series;
+    $scope.data = [Services.results.data];
+    $scope.onClick = function (points, evt) {
+      console.log(points, evt);
+    };
+    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+    $scope.options = {
+      scales: {
+        yAxes: [
+          {
+            id: 'y-axis-1',
+            type: 'linear',
+            display: true,
+            position: 'left'
+          }
+        ]
+      }
+    };
+  }
 })
