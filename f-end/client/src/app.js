@@ -60,6 +60,8 @@ angular.module('Widget', ['chart.js'])
       $scope.rates.directUnsubsidizedUndergrad = data.directUnsubsidizedUndergrad;
       $scope.rates.directUnsubsidizedGrad = data.directUnsubsidizedGrad;
       $scope.rates.directPlus = data.directPlus;
+      $scope.rates.bankLoan = data.bankLoan;
+      $scope.rates.universityLoan = data.universityLoan;
     })
   }
 })
@@ -77,20 +79,33 @@ angular.module('Widget', ['chart.js'])
     })
     .then((data) => {
       $scope.monthly = data.monthlyPayment;
-      $scope.months = Services.options.loan;
+      $scope.months = Services.options.loanPeriod;
       $scope.labels = data.labels;
       $scope.series = data.series;
       $scope.data = [data.payments];
 
       $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
       $scope.options = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
+          xAxes:[{
+            display: true,
+            scaleLabel: {
+              display: true,
+              labelString: 'Months'
+            }
+          }],
           yAxes: [
             {
               id: 'y-axis-1',
               type: 'linear',
               display: true,
-              position: 'left'
+              position: 'left',
+              scaleLabel: {
+                display: true,
+                labelString: 'How Much You Owe'
+              }
             }
           ]
         }

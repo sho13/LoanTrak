@@ -7,17 +7,12 @@ app.use(express.static(path.join(__dirname, '/../client/')));
 app.use(express.static(path.join(__dirname, '/../node_modules')));
 app.use(bodyParser.json());
 
-//api call for the current rates
+//to get the data from the website https://studentaid.ed.gov/sa/types/loans/interest-rates
+//i created a route that would scrape the site for the needed data.
 
-app.get('/api/currentrates', (req, res) => {
-  const body = {
-    directSubsidizedUndergrad: `3.76%`,
-    directUnsubsidizedUndergrad: `3.76%`,
-    directUnsubsidizedGrad: `5.31%`,
-    directPlus: `6.31%`
-  }
-  res.send(body);
-});
+const studentLoanRoute = require('./routes')
+
+app.use('/', studentLoanRoute)
 
 app.post('/api/loaninfo', (req, res) => {
   res.send(req.body);

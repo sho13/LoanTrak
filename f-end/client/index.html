@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <head>
   <title>Loan Tracker</title>
+  <link rel="stylesheet" href="./stylesheets/site.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet">
+
 </head>
 <body ng-app="Widget">
   <div>
     <h1>Loan Tracker</h1>
 
-    <div ng-controller="InputController">
+    <div class="nav center" ng-controller="InputController">
       Scholarship: <input text="text" ng-model="query.scholarship" placeholder="Scholarship" />
       Interest Rate: <input text="text" ng-model="query.interest" placeholder="ex: 0.05" />
       Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
       <button ng-click="input()">Track Your Loan! </button>
-      <p>You will pay: {{monthly}} over the course of: {{months}} months</p>
 
-      <div ng-controller="CurrentRate">
-        <input type="submit" value="Click For Current Interest Rates" ng-click="currentRate()" />
-        <p>Direct Subsidized Undergrad: {{rates.directSubsidizedUndergrad}}</p>
-        <p>Direct Unsubsidized Undergrad: {{rates.directUnsubsidizedUndergrad}}</p>
-        <p>Direct Unsubsidized Grad: {{rates.directUnsubsidizedGrad}}</p>
-        <p>Direct Plus: {{rates.directPlus}}</p>
-      </div>
+      <span ng-controller="CurrentRate">
+        <button  type="submit" ng-click="currentRate()"/>Click For Current Interest Rates </button>
+          <span>
+            <p>Direct Subsidized Undergrad: {{rates.directSubsidizedUndergrad}}</p>
+            <p>Direct Unsubsidized Undergrad: {{rates.directUnsubsidizedUndergrad}}</p>
+            <p>Direct Unsubsidized Graduate and Professional: {{rates.directUnsubsidizedGrad}}</p>
+            <p>Direct Plus: {{rates.directPlus}}</p>
+            <p>Bank Loan: {{rates.bankLoan}}</p>
+            <p>University Loan: {{rates.universityLoan}}</p>
+        </span>
+      </span>
 
+      <div>
+        <p>You will pay: ${{monthly}} over the course of: {{months}} months</p>
+      <div>
       <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
-
     </div>
 
   </div>
