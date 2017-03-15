@@ -42,9 +42,10 @@
         <p>If you paid: $<span class="monthly">{{monthly2}}</span> per month, it would take you <span class="months">{{newMonths}}</span> months to pay off the loan</p>
       </div>
 
-      <div class="container" ng-if="showChart">
-        <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" ></canvas>
+      <div id="lines" class="container" ng-if="showChart">
+        <canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" ></canvas>
       </div>
+
     </ul>
     </div>
 

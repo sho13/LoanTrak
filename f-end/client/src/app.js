@@ -82,7 +82,9 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
     document.getElementById("forms").style.marginLeft = "400px";
     document.getElementById("sidebar").style.marginLeft = "400px";
     document.getElementById("howMuch").style.marginLeft = "400px";
-    document.getElementById("line").style.marginLeft = "400px";
+    if(document.getElementById("lines") !== null) {
+        document.getElementById("lines").style.marginLeft = "400px";
+    }
     element.open = true;
   }
 
@@ -91,14 +93,15 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
     document.getElementById("forms").style.marginLeft = "0";
     document.getElementById("sidebar").style.marginLeft = "0";
     document.getElementById("howMuch").style.marginLeft = "0";
-    document.getElementById("line").style.marginLeft = "0";
+    if(document.getElementById("lines") !== null) {
+        document.getElementById("lines").style.marginLeft = "0";
+    }
     element.open = false;
   }
 
   $scope.currentRate = () => {
     Services.rateSearch()
     .then((response) => {
-      console.log('hello');
       let data = response.data;
       $scope.rates.directSubsidizedUndergrad = data.directSubsidizedUndergrad;
       $scope.rates.directUnsubsidizedUndergrad = data.directUnsubsidizedUndergrad;
