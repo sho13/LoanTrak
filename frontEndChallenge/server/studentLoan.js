@@ -10,6 +10,7 @@ module.exports = {
         console.log('Error in GetLoanInfo call: ', err);
         return err;
       }
+      //scraper that scraped the data needed from the website
       scraperjs.StaticScraper.create(`https://studentaid.ed.gov/sa/types/loans/interest-rates`)
         .scrape(function($) {
           return $("table p").map(function() {

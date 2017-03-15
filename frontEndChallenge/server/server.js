@@ -7,14 +7,10 @@ app.use(express.static(path.join(__dirname, '/../client/')));
 app.use(express.static(path.join(__dirname, '/../node_modules')));
 app.use(bodyParser.json());
 
-//to get the data from the website https://studentaid.ed.gov/sa/types/loans/interest-rates
-//i created a route that would scrape the site for the needed data.
-
 const studentLoanRoute = require('./routes')
 
 app.use('/', studentLoanRoute);
 
-//set port
 const port = process.env.PORT || 5000;
 
 app.listen(port, (err) => {
