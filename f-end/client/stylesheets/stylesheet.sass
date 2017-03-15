@@ -57,10 +57,19 @@ body
 .months
   color: blue
 
-#line
-  position: relative
+.rate
+  color: red
+
+.container
+  transition: all linear 2s
   height: 50vh
-    // width: 50vh
   width: 100% !important
   max-width: 1200px
-  // height: auto !important
+  &.ng-enter
+    opacity: 0
+  &.ng-leave
+    &.ng-leave-active
+      opacity: 0
+    opacity: 1
+  &.ng-enter.ng-enter-active
+    opacity: 1

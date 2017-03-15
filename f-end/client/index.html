@@ -11,13 +11,15 @@
     <h1>Loan Tracker</h1>
 
     <div class="nav center" ng-controller="InputController">
+
       <ul>
+
       <form id="forms" ng-submit="input()">
         Your Loan: <input text="text" ng-model="query.scholarship" placeholder="Loan" />
         Interest Rate: <input text="text" ng-model="query.interest" placeholder="ex: 5% => 0.05" />
         Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
         You want to pay: <input text="text" ng-model="query.optionalPayment" placeholder="ex: 50.00" />
-        <button ng-click="input()">Track Your Loan! </button>
+        <button ng-click="input(); showChart = !showChart">Track Your Loan! </button>
       </form>
 
       <span ng-controller="CurrentRateCtrl">
@@ -25,11 +27,11 @@
           <span id="side" class="sidenav">
             <h3>Current Interest Rates</h3>
             <p>Direct Subsidized Undergrad: <span class="rate">{{rates.directSubsidizedUndergrad}}</span></p>
-            <p>Direct Unsubsidized Undergrad: <span>{{rates.directUnsubsidizedUndergrad}}</span></p>
-            <p>Direct Unsubsidized Graduate and Professional: <span>{{rates.directUnsubsidizedGrad}}</span></p>
-            <p>Direct Plus: <span>{{rates.directPlus}}</span></p>
-            <p>Bank Loan: <span>{{rates.bankLoan}}</span></p>
-            <p>University Loan: <span>{{rates.universityLoan}}</span></p>
+            <p>Direct Unsubsidized Undergrad: <span class="rate">{{rates.directUnsubsidizedUndergrad}}</span></p>
+            <p>Direct Unsubsidized Graduate and Professional: <span class="rate">{{rates.directUnsubsidizedGrad}}</span></p>
+            <p>Direct Plus: <span class="rate">{{rates.directPlus}}</span></p>
+            <p>Bank Loan: <span class="rate">{{rates.bankLoan}}</span></p>
+            <p>University Loan: <span class="rate">{{rates.universityLoan}}</span></p>
             <br>
             <a href="#" ng-click="currentRate()"> Close</a>
         </span>
@@ -40,8 +42,10 @@
         <p>If you paid: $<span class="monthly">{{monthly2}}</span> per month, it would take you <span class="months">{{newMonths}}</span> months to pay off the loan</p>
       </div>
 
-      <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" ></canvas>
-
+      <div class="container" ng-if="showChart">
+        <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" ></canvas>
+      </div>
+    </ul>
     </div>
 
   </div>

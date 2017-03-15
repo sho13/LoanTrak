@@ -95,7 +95,6 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
     element.open = false;
   }
 
-
   $scope.currentRate = () => {
     Services.rateSearch()
     .then((response) => {
@@ -132,6 +131,7 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
       $scope.labels = data.labels;
       $scope.series = data.series;
       $scope.data = [data.payments, data.alternativePayments];
+      $scope.showChart = true;
 
       $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
       $scope.options = {
