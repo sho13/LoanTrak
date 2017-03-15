@@ -12,13 +12,17 @@ angular.module('Widget', ['chart.js'])
   const inputData = () => {
     return $http.post(`/api/loaninfo`, options)
     .then((response) => {
+      if(Object.keys(response.data).length === 0) {
+        return
+      }
+      
       let data = {
         scholarship: parseInt(response.data.scholarship),
         interest: parseFloat(response.data.interest),
         loanPeriod: parseInt(response.data.loanPeriod)
       }
 
-      var results = {
+      let results = {
         scholarship: data.scholarship,
         monthlyPayment: parseFloat(((data.scholarship * data.interest) / data.loanPeriod).toFixed(2)),
         months: data.loanPeriod,
@@ -29,7 +33,7 @@ angular.module('Widget', ['chart.js'])
 
       let scholarship = results.scholarship;
 
-      for(var i = 0; i < results.months; i++) {
+      for(let i = 0; i < results.months; i++) {
         results.labels.push(i.toString());
         scholarship -= results.monthlyPayment;
         if(scholarship >= 0) {
