@@ -25,7 +25,6 @@ module.exports = {
               bankLoan: '4.2%',
               universityLoan: '4.0%'
             }
-            console.log(body);
           return res.status(200).send(body);
         })
     })

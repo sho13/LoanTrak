@@ -10,14 +10,16 @@
     <h1>Loan Tracker</h1>
 
     <div class="nav center" ng-controller="InputController">
-      Scholarship: <input text="text" ng-model="query.scholarship" placeholder="Scholarship" />
-      Interest Rate: <input text="text" ng-model="query.interest" placeholder="ex: 0.05" />
-      Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
-      <button ng-click="input()">Track Your Loan! </button>
-
+      <ul>
+      <form ng-submit="input()">
+        Loan: <input text="text" ng-model="query.scholarship" placeholder="Loan" />
+        Interest Rate: <input text="text" ng-model="query.interest" placeholder="ex: 5% => 0.05" />
+        Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
+        <button ng-click="input()">Track Your Loan! </button>
+      </form>
       <span ng-controller="CurrentRate">
-        <button  type="submit" ng-click="currentRate()"/>Click For Current Interest Rates </button>
-          <span>
+        <button class="accordion" type="submit" ng-click="currentRate()"/>Click For Current Interest Rates </button>
+          <span class="panel">
             <p>Direct Subsidized Undergrad: {{rates.directSubsidizedUndergrad}}</p>
             <p>Direct Unsubsidized Undergrad: {{rates.directUnsubsidizedUndergrad}}</p>
             <p>Direct Unsubsidized Graduate and Professional: {{rates.directUnsubsidizedGrad}}</p>
@@ -26,7 +28,6 @@
             <p>University Loan: {{rates.universityLoan}}</p>
         </span>
       </span>
-
       <div>
         <p>You will pay: ${{monthly}} over the course of: {{months}} months</p>
       <div>
