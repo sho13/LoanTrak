@@ -16,6 +16,7 @@
         Your Loan: <input text="text" ng-model="query.scholarship" placeholder="Loan" />
         Interest Rate: <input text="text" ng-model="query.interest" placeholder="ex: 5% => 0.05" />
         Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
+        You want to pay: <input text="text" ng-model="query.optionalPayment" placeholder="ex: 50.00" />
         <button ng-click="input()">Track Your Loan! </button>
       </form>
 
@@ -37,7 +38,9 @@
       <div id="howMuch">
         <p>You will pay: ${{monthly}} over the course of: {{months}} months</p>
       </div>
-      <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="width: 837px; height: 400px;"></canvas>
+
+      <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" ></canvas>
+
     </div>
 
   </div>
