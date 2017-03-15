@@ -7,6 +7,7 @@
 </head>
 <body ng-app="Widget">
   <div>
+    
     <h1>Loan Tracker</h1>
 
     <div class="nav center" ng-controller="InputController">
@@ -17,28 +18,38 @@
         Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
         <button ng-click="input()">Track Your Loan! </button>
       </form>
+
       <span ng-controller="CurrentRate">
-        <button class="accordion" type="submit" ng-click="currentRate()"/>Click For Current Interest Rates </button>
-          <span class="panel">
+        <button id="sidebar" type="submit" ng-click="currentRate()"/>Click For Current Interest Rates </button>
+          <span id="side" class="sidenav">
+
+            <h2>Current Interest Rates</h2>
             <p>Direct Subsidized Undergrad: {{rates.directSubsidizedUndergrad}}</p>
             <p>Direct Unsubsidized Undergrad: {{rates.directUnsubsidizedUndergrad}}</p>
             <p>Direct Unsubsidized Graduate and Professional: {{rates.directUnsubsidizedGrad}}</p>
             <p>Direct Plus: {{rates.directPlus}}</p>
             <p>Bank Loan: {{rates.bankLoan}}</p>
             <p>University Loan: {{rates.universityLoan}}</p>
+            <p ng-click="currentRate()"> Close</p>
         </span>
       </span>
+
       <div>
         <p>You will pay: ${{monthly}} over the course of: {{months}} months</p>
-      <div>
-      <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
+      </div>
+      <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="width: 837px; height: 400px;"></canvas>
     </div>
 
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-  <script src="./src/app.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.0.2/Chart.min.js"></script>
-  <script src="http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script></body>
+  <script src="http://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
+  <script src="./src/app.js"></script>
+
 </body>
 </html>

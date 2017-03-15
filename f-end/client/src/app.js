@@ -1,4 +1,4 @@
-angular.module('Widget', ['chart.js'])
+angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria'])
 
 .factory('Services',($http) => {
 
@@ -60,9 +60,23 @@ angular.module('Widget', ['chart.js'])
 //current loan rates
 .controller("CurrentRate", function($scope, Services) {
   $scope.rates = {};
+  let element = document.getElementById("sidebar");
+
+  openNav = () => {
+    document.getElementById("side").style.width = "400px";
+    element.open = true;
+  }
+
+  closeNav = () => {
+    document.getElementById("side").style.width = "0";
+    element.open = false;
+  }
+
+
   $scope.currentRate = () => {
     Services.rateSearch()
     .then((response) => {
+      console.log('hello');
       let data = response.data;
       $scope.rates.directSubsidizedUndergrad = data.directSubsidizedUndergrad;
       $scope.rates.directUnsubsidizedUndergrad = data.directUnsubsidizedUndergrad;
@@ -71,6 +85,11 @@ angular.module('Widget', ['chart.js'])
       $scope.rates.bankLoan = data.bankLoan;
       $scope.rates.universityLoan = data.universityLoan;
     })
+    if(element.open !== true) {
+      openNav();
+    } else if(element.open === true) {
+      closeNav();
+    }
   }
 })
 
