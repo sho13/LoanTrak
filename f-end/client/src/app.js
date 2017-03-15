@@ -30,7 +30,7 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
         monthlyPayment: parseFloat((((data.scholarship / data.loanPeriod) * data.interest) + (data.scholarship / data.loanPeriod)).toFixed(2)),
         optionalPayment: data.optionalPayment,
         months: data.loanPeriod,
-        newMonths: 0,
+        newMonths: null,
         labels: [],
         payments: [data.scholarship],
         alternativePayments: [data.scholarship],
@@ -53,6 +53,12 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
           scholarship2 -= results.optionalPayment;
           results.alternativePayments.push(parseFloat(scholarship2.toFixed(2)))
         }
+        if(results.labels.length < results.newMonths) {
+          results.labels = [];
+          for(let i = 0; i < results.newMonths; i++) {
+            results.labels.push(i.toString());
+          }
+        }
       }
       resolve(results)
     });
@@ -73,11 +79,19 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
 
   openNav = () => {
     document.getElementById("side").style.width = "400px";
+    document.getElementById("forms").style.marginLeft = "400px";
+    document.getElementById("sidebar").style.marginLeft = "400px";
+    document.getElementById("howMuch").style.marginLeft = "400px";
+    document.getElementById("line").style.marginLeft = "400px";
     element.open = true;
   }
 
   closeNav = () => {
     document.getElementById("side").style.width = "0";
+    document.getElementById("forms").style.marginLeft = "0";
+    document.getElementById("sidebar").style.marginLeft = "0";
+    document.getElementById("howMuch").style.marginLeft = "0";
+    document.getElementById("line").style.marginLeft = "0";
     element.open = false;
   }
 
