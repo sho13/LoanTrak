@@ -57,8 +57,8 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
 
 })
 
-//current loan rates
-.controller("CurrentRate", function($scope, Services) {
+//current loan rates sidebar controller
+.controller("CurrentRateCtrl", function($scope, Services) {
   $scope.rates = {};
   let element = document.getElementById("sidebar");
 

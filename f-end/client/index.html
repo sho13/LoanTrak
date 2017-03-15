@@ -7,34 +7,34 @@
 </head>
 <body ng-app="Widget">
   <div>
-    
+
     <h1>Loan Tracker</h1>
 
     <div class="nav center" ng-controller="InputController">
       <ul>
       <form ng-submit="input()">
-        Loan: <input text="text" ng-model="query.scholarship" placeholder="Loan" />
+        Your Loan: <input text="text" ng-model="query.scholarship" placeholder="Loan" />
         Interest Rate: <input text="text" ng-model="query.interest" placeholder="ex: 5% => 0.05" />
         Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
         <button ng-click="input()">Track Your Loan! </button>
       </form>
 
-      <span ng-controller="CurrentRate">
-        <button id="sidebar" type="submit" ng-click="currentRate()"/>Click For Current Interest Rates </button>
+      <span ng-controller="CurrentRateCtrl">
+        <p id="sidebar" ng-click="currentRate()"/>Click For Current Interest Rates </p>
           <span id="side" class="sidenav">
-
-            <h2>Current Interest Rates</h2>
+            <h3>Current Interest Rates</h3>
             <p>Direct Subsidized Undergrad: {{rates.directSubsidizedUndergrad}}</p>
             <p>Direct Unsubsidized Undergrad: {{rates.directUnsubsidizedUndergrad}}</p>
             <p>Direct Unsubsidized Graduate and Professional: {{rates.directUnsubsidizedGrad}}</p>
             <p>Direct Plus: {{rates.directPlus}}</p>
             <p>Bank Loan: {{rates.bankLoan}}</p>
             <p>University Loan: {{rates.universityLoan}}</p>
-            <p ng-click="currentRate()"> Close</p>
+            <br>
+            <a href="#" ng-click="currentRate()"> Close</a>
         </span>
       </span>
 
-      <div>
+      <div id="howMuch">
         <p>You will pay: ${{monthly}} over the course of: {{months}} months</p>
       </div>
       <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" style="width: 837px; height: 400px;"></canvas>
