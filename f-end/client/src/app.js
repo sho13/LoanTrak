@@ -24,12 +24,13 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
         loanPeriod: parseInt(options.loanPeriod),
         optionalPayment: options.optionalPayment ? parseFloat(options.optionalPayment) : null
       }
-      console.log(data);
+
       let results = {
         scholarship: data.scholarship,
-        monthlyPayment: parseFloat(((data.scholarship * data.interest) / data.loanPeriod).toFixed(2)),
+        monthlyPayment: parseFloat((((data.scholarship / data.loanPeriod) * data.interest) + (data.scholarship / data.loanPeriod)).toFixed(2)),
         optionalPayment: data.optionalPayment,
         months: data.loanPeriod,
+        newMonths: 0,
         labels: [],
         payments: [data.scholarship],
         alternativePayments: [data.scholarship],
@@ -44,13 +45,15 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
         scholarship -= results.monthlyPayment;
         if(scholarship >= 0) {
           results.payments.push(parseFloat(scholarship.toFixed(2)))
-          if(results.optionalPayment !== null) {
-            scholarship2 -= results.optionalPayment;
-            results.alternativePayments.push(parseFloat(scholarship2.toFixed(2)))
-          }
         }
       }
-
+      if(results.optionalPayment !== null) {
+        results.newMonths = parseInt(scholarship2/results.optionalPayment)
+        while(scholarship2 > 0) {
+          scholarship2 -= results.optionalPayment;
+          results.alternativePayments.push(parseFloat(scholarship2.toFixed(2)))
+        }
+      }
       resolve(results)
     });
   }
@@ -109,12 +112,14 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
     Services.inputData($scope.query)
     .then((data) => {
       $scope.monthly = data.monthlyPayment;
-      $scope.months = Services.options.loanPeriod;
+      $scope.months = data.months;
+      $scope.newMonths = data.newMonths;
+      $scope.monthly2 = data.optionalPayment;
       $scope.labels = data.labels;
       $scope.series = data.series;
       $scope.data = [data.payments, data.alternativePayments];
 
-      $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2'}];
+      $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
       $scope.options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -136,12 +141,6 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
                 display: true,
                 labelString: 'How Much You Owe'
               }
-            },
-            {
-              id: 'y-axis-2',
-              type: 'linear',
-              display: true,
-              position: 'left'
             }
           ]
         }
