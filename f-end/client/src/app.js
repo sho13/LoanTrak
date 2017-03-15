@@ -13,9 +13,13 @@ angular.module('Widget', ['chart.js'])
     return $http.post(`/api/loaninfo`, options)
     .then((response) => {
       if(Object.keys(response.data).length === 0) {
+        alert("Please fill in all information!")
+        return
+      } else if(Object.keys(response.data.scholarship).length === 0 || Object.keys(response.data.interest).length === 0 || Object.keys(response.data.loanPeriod).length === 0) {
+        alert("Please fill in all information!")
         return
       }
-      
+
       let data = {
         scholarship: parseInt(response.data.scholarship),
         interest: parseFloat(response.data.interest),
