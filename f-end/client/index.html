@@ -3,7 +3,7 @@
   <title>Loan Tracker</title>
   <link rel="stylesheet" href="./stylesheets/site.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Baloo+Bhaina" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
 </head>
 <body ng-app="Widget">
   <div>
@@ -15,11 +15,11 @@
       <ul>
 
       <form id="forms" ng-submit="input()">
-        Your Loan: <input text="text" ng-model="query.scholarship" placeholder="Loan" />
-        Interest Rate: <input text="text" ng-model="query.interest" placeholder="ex: 5% => 0.05" />
-        Length of Loan (Months): <input text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
-        You want to pay: <input text="text" ng-model="query.optionalPayment" placeholder="ex: 50.00" />
-        <button ng-click="input(); showChart = !showChart">Track Your Loan! </button>
+        Your Loan: <input class="boxes" text="text" ng-model="query.scholarship" placeholder="Loan" />
+        Interest Rate: <input class="boxes" text="text" ng-model="query.interest" placeholder="ex: 5% => 0.05" />
+        Length of Loan (Months): <input class="boxes" text="text" ng-model="query.loanPeriod" placeholder="# of Months" />
+        You want to pay: <input class="boxes" text="text" ng-model="query.optionalPayment" placeholder="ex: 50.00" />
+        <button id="submit" class="boxes" ng-click="input(); showChart = !showChart">Track Your Loan! </button>
       </form>
 
       <span ng-controller="CurrentRateCtrl">
@@ -43,7 +43,8 @@
       </div>
 
       <div id="lines" class="container" ng-if="showChart">
-        <canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" ></canvas>
+        <!-- <h3>Your Payments</h3> -->
+        <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" ></canvas>
       </div>
 
     </ul>

@@ -2,16 +2,11 @@ body
   text-align: center
   font-family: 'Baloo Bhaina', cursive
   color: black
+  transition: 2s
 
-#sidebar
-  text-align: right
-  margin-left: 73%
-
-#howMuch
-  text-align: left
-  margin-top: -50px
 
 .center ul
+  font-family: 'Exo', sans-serif;
   width: -moz-fit-content
   width: -webkit-fit-content
   width: fit-content
@@ -29,7 +24,7 @@ body
   background-color: white
   overflow-x: hidden
   padding-top: 60px
-  transition: 0.5s
+  transition: 2s
   text-align: left
   margin-right: 3px
   a
@@ -41,8 +36,10 @@ body
     color: black
     display: block
     transition: 0.3s
+    outline: none
     &:hover
-      color: #f1f1f1
+      color: #ACACAC
+      cursor: pointer
 
 .sidenav .closebtn
   position: absolute
@@ -60,11 +57,20 @@ body
 .rate
   color: red
 
+#forms
+  button
+    &:hover
+      color: #ACACAC
+      cursor: pointer
+
+.boxes
+  margin-right: 10px
+
 .container
-  transition: all linear 2s
-  height: 50vh
-  width: 100% !important
-  max-width: 1200px
+  padding-top: 50px
+  transition: 2s
+  max-height: 50vh
+  max-width: 1150px
   &.ng-enter
     opacity: 0
   &.ng-leave
@@ -73,3 +79,23 @@ body
     opacity: 1
   &.ng-enter.ng-enter-active
     opacity: 1
+
+#sidebar
+  text-align: right
+  margin-left: 73%
+  margin-right: 10px
+  outline: none
+  &:hover
+    color: #ACACAC
+    cursor: pointer
+
+#howMuch
+  text-align: left
+  margin-top: -50px
+  p
+    padding-top: 10px
+    margin-bottom: -20px
+
+#line
+  width: 100% !important
+  height: 100% !important

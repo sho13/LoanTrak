@@ -127,6 +127,13 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
   $scope.input = function () {
     Services.inputData($scope.query)
     .then((data) => {
+      const lines = document.getElementById("lines").style.marginLeft;
+      const forms = document.getElementById("forms").style.marginLeft;
+
+      if(forms === "400px" && lines === "" ){
+        document.getElementById("lines").style.marginLeft = "400px"
+      }
+
       $scope.monthly = data.monthlyPayment;
       $scope.months = data.months;
       $scope.newMonths = data.newMonths;
@@ -138,6 +145,12 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
 
       $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
       $scope.options = {
+        title: {
+          display: true,
+          text: 'Your Payments',
+          fontFamily: "'Exo', sans-serif",
+          fontSize: 15
+        },
         responsive: true,
         maintainAspectRatio: false,
         scales: {
