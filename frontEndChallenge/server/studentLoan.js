@@ -21,8 +21,6 @@ module.exports = {
           const body = {
               directSubsidizedUndergrad: data[6],
               directUnsubsidizedUndergrad: data[9],
-              directUnsubsidizedGrad: data[12],
-              directPlus: data[15],
               bankLoan: '4.2%',
               universityLoan: '4.0%'
             }

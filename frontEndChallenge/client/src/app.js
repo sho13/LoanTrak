@@ -105,8 +105,6 @@ angular.module('Widget', ['chart.js', 'ng', 'ngMaterial', 'ngAnimate', 'ngAria']
       let data = response.data;
       $scope.rates.directSubsidizedUndergrad = data.directSubsidizedUndergrad;
       $scope.rates.directUnsubsidizedUndergrad = data.directUnsubsidizedUndergrad;
-      $scope.rates.directUnsubsidizedGrad = data.directUnsubsidizedGrad;
-      $scope.rates.directPlus = data.directPlus;
       $scope.rates.bankLoan = data.bankLoan;
       $scope.rates.universityLoan = data.universityLoan;
     })
